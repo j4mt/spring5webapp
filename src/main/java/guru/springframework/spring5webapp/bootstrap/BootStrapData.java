@@ -27,27 +27,37 @@ public class BootStrapData implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
+        Publisher publisher = new Publisher("j4mt","24 hut street","Long beach","California","123456");
+        publisherRepository.save(publisher);
+        System.out.println("Number of Publisher's : " + publisherRepository.count());
+
         Author eric = new Author("Eric", "Evans");
         Book ddd = new Book("Domain Driven Design", "123123");
         eric.getBooks().add(ddd);
         ddd.getAuthors().add(eric);
 
+        ddd.setPublisher(publisher);
+        publisher.getBooks().add(ddd);
+
         authorRepository.save(eric);
         bookRepository.save(ddd);
+        publisherRepository.save(publisher);
 
         Author rod = new Author("Rod", "johnson");
         Book noEJB = new Book("J2EE Development without EJB", "3939459459");
         rod.getBooks().add(noEJB);
         noEJB.getAuthors().add(rod);
 
+        noEJB.setPublisher(publisher);
+        publisher.getBooks().add(noEJB);
+
         authorRepository.save(rod);
         bookRepository.save(noEJB);
+        publisherRepository.save(publisher);
 
         System.out.println("Started boot strap");
         System.out.println("Number of books : " + bookRepository.count());
+        System.out.println("Number of books Publisher : " + publisher.getBooks().size());
 
-        Publisher publisher = new Publisher("j4mt","24 hut street","Long beach","California","123456");
-        publisherRepository.save(publisher);
-        System.out.println("Number of Publishers : " + publisherRepository.count());
     }
 }
